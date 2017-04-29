@@ -1,0 +1,39 @@
+{
+  "name": "krizcortes-mvp",
+  "version": "1.0.0",
+  "description": "Real time multiple users interaction with Socket.io",
+  "main": "app-server.js",
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "start": "nodemon app-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirkortes/hrsf75-mvp.git"
+  },
+  "author": "Kriz Cortes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sirkortes/hrsf75-mvp/issues"
+  },
+  "homepage": "https://github.com/sirkortes/hrsf75-mvp#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.2",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "webpack": "^2.2.1"
+  }
+}
