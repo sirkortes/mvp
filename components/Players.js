@@ -9,13 +9,12 @@ class Players extends React.Component {
   constructor(props) {
     super(props);
     this.emit = this.emit.bind(this);
-    // this.state = props.state;
 
-    console.log("Players Props",props)
+    console.log("[P] Players:", props)
   }
 
   emit(event, payLoad){
-    console.log("Players intercepted", event );
+    console.log("Players intercepted", event, payLoad );
     // intercepts event before it reaches parent App Component
 
     // if ( event === 'join' ){
@@ -28,14 +27,16 @@ class Players extends React.Component {
 
   render() {
 
-    console.log("[R] PLAYERS")
     var show;
+    console.log("[R] PLAYERS")
 
     if ( this.props.state.status === "connected" ){
 
+      console.log("[R] PLAYERS CONNECTED")
       if ( !this.props.state.player.name ){
 
         // not as a player
+        console.log("[R] PLAYERS REGISTRATION")
         return (
                 <div>
                     <Registration emit={ this.emit } />
@@ -45,6 +46,7 @@ class Players extends React.Component {
       } else {
 
         // is a player
+        console.log("[R] PLAYERS GAME")
         return (
                 <div>
                     <Game player={ this.props.state.player } />

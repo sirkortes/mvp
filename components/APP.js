@@ -15,7 +15,7 @@ class APP extends React.Component {
   constructor(props) {
     super(props);
     this.joined = this.joined.bind(this);
-    this.renderChildren = this.renderChildren.bind(this);
+    // this.renderChildren = this.renderChildren.bind(this);
     this.emit = this.emit.bind(this);
     this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
@@ -43,9 +43,9 @@ class APP extends React.Component {
     this.socket.emit(eventName, payLoad);
   }
 
-  joined(player) {
-    this.setState({ player: player });
-    console.log("JOINED");
+  joined({player, players}) {
+    this.setState({ player: player, players: players });
+    console.log("JOINED",player, players);
 
   }
 
@@ -65,24 +65,24 @@ class APP extends React.Component {
     this.setState({ title: serverState.title })
   }
 
-  renderChildren(children) {
-    var context = this;
-    return React.Children.map( children, child => {
+  // renderChildren(children) {
+  //   var context = this;
+  //   return React.Children.map( children, child => {
 
-      // if (child.type === Registration){
-        return React.cloneElement( 
-          child, 
-          { 
-            emit: context.emit,
-            status: this.state.status,
-            player: this.state.player
-          });
-      // } else {
-        // return child;
-      // }
+  //     // if (child.type === Registration){
+  //       return React.cloneElement( 
+  //         child, 
+  //         { 
+  //           emit: context.emit,
+  //           status: this.state.status,
+  //           player: this.state.player
+  //         });
+  //     // } else {
+  //       // return child;
+  //     // }
 
-    });
-  }
+  //   });
+  // }
 
 
   render(){

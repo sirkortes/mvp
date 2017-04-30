@@ -13,7 +13,8 @@ class Header extends React.Component {
     return (
         <div id="gameHead">
           <div id="headPlayerLeft">
-            <p id="headPlayerType">{ this.props.player.type }</p>
+            {/*<p className={`vehicle type${this.props.player.type}3 headPlayerType`}>
+            </p>*/}
             <p id="headPlayerName">{ this.props.player.name}</p>
           </div>
           <div id="headPlayerRight">

@@ -21,6 +21,7 @@ const title = "WELCOME TO THE JUNGLE";
 io.sockets.on('connection', function(socket) {
 
 
+    // on player disconnecting
     socket.once('disconnect', function() {
 
       var player = _.findWhere( players, { id: this.id });
@@ -48,9 +49,26 @@ io.sockets.on('connection', function(socket) {
       player.deaths = 0;
       player.score = 0;
       player.life = 3;
-      
-      this.emit( 'joined', player );
+      player.location = { x: 10, y: 10 };
+      player.rotation = 0;
 
+      // add to players
+      players.push( player )
+
+      // remove current player from players
+      // when sending back as players container
+      // does splice alter the seerver's array??? 
+      // var others = players.splice( players.indexOf(player), 1);
+      // console.log("OTHERS",others)
+
+      // send back to game
+      this.emit( 'joined', { player: player, players: players });
+
+    })
+
+    socket.on('action', function(data){
+      // on action, update player data here in server
+      // and send that data to everybody else
     })
 
     // Passing in title from server
