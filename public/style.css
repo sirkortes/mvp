@@ -22,47 +22,12 @@ body {
     background-color: red;
 }
 
-form button {
-    margin: 1em 0;
+#gameboard {
+    /*border: 1px solid #ccc;*/
+    height: 600px;
+    background-color: antiquewhite;
 }
 
-form label {
-    font-size: 1.5em;
-    margin: 1em 0 0;
+.radio-inline{
+    margin: 0 40px;
 }
-
-div#not-found a {
-    display: block;
-    clear: both;
-}
-
-div#not-found a,
-form a {
-    position: relative;
-    left: 15px;
-    top: 10px;
-    padding-left: 20px;
-}
-
-
-#questions>div>span {
-    padding: .5em;
-    margin: .5em;
-    display: block;
-    cursor: pointer;
-    border: 2px solid green;
-}
-
-#questions>div>span:hover {
-    background-color: yellow;
-}
-
-#currentQuestion button {
-    margin: 2px 0;
-    cursor: pointer;
-}
-
-#currentQuestion button:hover {
-    opacity: 0.9;
-}
-

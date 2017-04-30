@@ -5,14 +5,7 @@ class Header extends React.Component {
   
   constructor(props){
     super(props);
-    // props.status = 'disconnected';
   }
-
-  // getDefaultProps() {
-  //   return {
-  //     status: 'disconnected'
-  //   }
-  // }
 
 
   render(){

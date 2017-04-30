@@ -1,27 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-const DefaultRoute = Router.DefaultRoute;
+import { bowserHistory, hashHistory, Router, Route, Redirect, IndexRoute } from 'react-router';
 
 import APP from './components/APP.js';
-import Audience from './components/Audience.js'
-import Speaker from './components/Speaker.js'
-import Board from './components/Board.js'
+import Registration from './components/Registration.js'
+import Game from './components/Game.js'
+import Score from './components/Score.js'
+import Whoops404 from './components/Whoops404.js'
 
-
-// WHY YOU ROUTES NOT WORK?!?!
-const routes = (
-    <APP>
-        <Route exact path="/" component={Audience}/>
-        <Route path="/audience" component={Audience}/>
-        <Route path="/speaker" component={Speaker}/>
-        <Route path="/board" component={Board}/>
-    </APP>
+const Routes = (
+      <Router history={hashHistory}>
+        <Redirect from="/" to="/register"/>
+        <Route path="/" component={APP}>
+          <Route path="register" component={Registration}/>
+          <Route path="game" component={Game}/>
+          <Route path="score" component={Score}/>
+          <Route path ="*" component={Whoops404}/>
+        </Route>
+      </Router>
   );
 
 
-  ReactDOM.render( 
-    <Router>{routes}</Router>, 
-    document.getElementById('react-container') 
-  );
+ReactDOM.render( 
+  Routes, 
+  document.getElementById('react-container') 
+);
+
+//renderwithsprops () {
+  //return (<List data={this.props}/>)
+//}
+
+//<Route path='blahblah' render={this.renderWithProps}
+//}
   
