@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Display from './parts/Display.js';
 
 class Registration extends React.Component {
 
@@ -16,7 +17,7 @@ class Registration extends React.Component {
 
   join(){
     var player = {
-      username: ReactDOM.findDOMNode(this.refs.inputUsername).value,
+      name: ReactDOM.findDOMNode(this.refs.inputUsername).value,
       type: this.state.type
     }    
     // EMIT AN EVENT TO THE SERVER
@@ -31,7 +32,7 @@ class Registration extends React.Component {
     var registration = this;
     return (
       <div className="col-md-4 col-md-offset-4" style={{ textAlign: 'center'}}>
-        <h1 style={{ margin: '120px 0 40px 0'}}>WELCOME</h1>
+        <h1 style={{ margin: '250px 0 40px 0'}}>WELCOME</h1>
         <form action="javascript:void(0)" onSubmit={ registration.join }>
 
           <div className="form-group">

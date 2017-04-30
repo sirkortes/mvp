@@ -1,23 +1,31 @@
 import React from 'react';
-// import { bowserHistory, hashHistory, Router, Route, Redirect, IndexRoute } from 'react-router';
-
 import io from 'socket.io-client';
-import Header from './parts/Header';
-import Registration from './Registration.js'
-// import Butler from './Butler.js';
+// import _ from 'underscore';
+// import Header from './Header';
+import Registration from './Registration.js';
+import Game from './Game.js';
+import Score from './Score.js';
+import Display from './parts/Display.js';
+import Players from './Players.js';
+
+
 
 class APP extends React.Component {
 
   constructor(props) {
     super(props);
+    this.joined = this.joined.bind(this);
     this.renderChildren = this.renderChildren.bind(this);
     this.emit = this.emit.bind(this);
     this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
     this.welcome = this.welcome.bind(this);
-    this.state = { status: 'disconnected', title: '' }
 
-    // console.log("App Props",this.props)
+    this.state = { 
+        status: 'disconnected', 
+        title: '',
+        player: {} 
+      }
   }
 
   componentWillMount(){
@@ -26,58 +34,72 @@ class APP extends React.Component {
     this.socket.on('connect', this.connect);
     this.socket.on('disconnect', this.disconnect);
     this.socket.on('welcome', this.welcome);
+    this.socket.on('joined', this.joined);
   }
 
   emit(eventName, payLoad) {
-    // socket's own emit function 
-    // we can use to send data to the server
-    console.log("EMITTING FUCKING EVENT",eventName, payLoad)
+    // SEND DATA TO SERVER THROUGH IO'S EMIT
+    console.log("EMITTING",eventName, payLoad )
     this.socket.emit(eventName, payLoad);
+  }
+
+  joined(player) {
+    this.setState({ player: player });
+    console.log("JOINED");
+
   }
 
   connect() {
 
-      console.log("CONNECTED CLIENT - " + this.socket.id );
+      // console.log("CONNECTED CLIENT - " + this.socket.id );
       this.setState({ status: 'connected' });
   }
 
   disconnect() {
-      console.log("DISCONNECTED CLIENT ", this.socket.id); 
+      // console.log("DISCONNECTED CLIENT ", this.socket.id); 
       this.setState({ status: 'disconnected' });
   }
 
   welcome(serverState) {
+
     this.setState({ title: serverState.title })
   }
 
   renderChildren(children) {
     var context = this;
-    // console.log("CONTEXT RENCHILDREN",context);
+    return React.Children.map( children, child => {
 
-    return React.Children.map(children, child => {
+      // if (child.type === Registration){
+        return React.cloneElement( 
+          child, 
+          { 
+            emit: context.emit,
+            status: this.state.status,
+            player: this.state.player
+          });
+      // } else {
+        // return child;
+      // }
 
-      if (child.type === Registration){
-        console.log("CLONING CHILD");
-        return React.cloneElement(child, {
-          emit: context.emit
-        });
-      } else {
-        return child;
-      }
     });
   }
 
 
   render(){
+    console.log("[R] APP")
     return (
-        <div>
-          <Header title={ this.state.title } 
-                  status={ this.state.status } />
-            { this.renderChildren(this.props.children) } 
+        <div id="app">
+          {/*<Header title={ this.state.title } 
+                  status={ this.state.status } />*}
+
+            {/* this.renderChildren(this.props.children) */}
+            <Players emit={ this.emit }
+                     state={ this.state }
+             />
         </div>
       );
   }
 
 };
-// { console.log("it's FUCKIN CHILDREN", this.props.children )}
+
 export default APP;
