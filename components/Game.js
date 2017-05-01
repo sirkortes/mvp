@@ -13,6 +13,7 @@ class Game extends React.Component {
   update( updatePackage ){
     // receive movements from Vehicle,
     // pass them to Players Component
+    console.log("pack through game");
     this.props.update( updatePackage );
   }
 

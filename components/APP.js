@@ -51,6 +51,7 @@ class APP extends React.Component {
   update( updatePackage ){
     // receive movement from players component
     // pass them to the server
+    console.log("pack through app");
     console.log("\nAPP UPDATING TO", updatePackage)
     let updatedPlayer = this.state.player;
     // console.log("UPDATED PLAYER START", updatedPlayer)

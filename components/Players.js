@@ -22,6 +22,7 @@ class Players extends React.Component {
   update( updatePackage ) {
     // receive movement from game,
     // pass them to app
+    console.log("pack through players");
     this.props.update( updatePackage );
   }
 

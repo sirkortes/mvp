@@ -206,30 +206,30 @@ class Vehicle extends React.Component {
       
       const moveForward = function(moveSpeed, angle){
         // [ x, y ] ( left, top )
-          // const forwardMove = {
-          //   // up
-          //     "0": [ 0, 20 ],
-          //   // top rights
-          //    "30": [ 5, 15 ],
-          //    "60": [ 10, 10 ],
-          //   // right
-          //    "90": [ 20, 0 ],
-          //   // down rights
-          //   "120": [ 10, -10],
-          //   "150": [ 5, -15],
-          //   // down
-          //   "180": [ 0, -20],
-          //   // down left
-          //   "210": [ -5, -15 ],
-          //   "240": [ -10, -10 ],
-          //   // left
-          //   "270": [ -20, 0 ],
-          //   // up left
-          //   "300": [ -10, 10 ],
-          //   "330": [ -5, 15],
-          //   // up
-          //   "360": [ 0, 20],
-          // }
+          const forwardMove = {
+            // up
+              "0": [ 0, 20 ],
+            // top rights
+             "30": [ 5, 15 ],
+             "60": [ 10, 10 ],
+            // right
+             "90": [ 20, 0 ],
+            // down rights
+            "120": [ 10, -10],
+            "150": [ 5, -15],
+            // down
+            "180": [ 0, -20],
+            // down left
+            "210": [ -5, -15 ],
+            "240": [ -10, -10 ],
+            // left
+            "270": [ -20, 0 ],
+            // up left
+            "300": [ -10, 10 ],
+            "330": [ -5, 15],
+            // up
+            "360": [ 0, 20],
+          }
 
 
 
@@ -238,12 +238,15 @@ class Vehicle extends React.Component {
           // moving = true;
 
           // calculate left and top to add
-          let [addleft, addtop] = calculateMove(moveSpeed, angle);
 
-          let left = context.props.player.location.x + addleft;
-          
-          let top = context.props.player.location.y + addtop;
-          
+
+          // let [addleft, addtop] = calculateMove(moveSpeed, angle);
+          // let left = context.props.player.location.x + addleft;
+          // let top = context.props.player.location.y + addtop;
+
+          let left = context.props.player.location.x + forwardMove[angle][0];
+          let top = context.props.player.location.y - forwardMove[angle][1];
+
           // constrain to gameboard
           left = (left <= 0) ? 0 : (left >= 870) ? 870 : left;
            top =  (top <= 0) ? 0 : (top >= 540) ? 540 : top;
