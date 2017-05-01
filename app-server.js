@@ -84,21 +84,26 @@ io.sockets.on('connection', function(socket) {
     // need to always find this player to update him
     let thisplayer = _.findWhere( players, { id: this.id });
 
-    console.log("THISPLAYER",thisplayer.name, thisplayer.location );
+    if ( thisplayer ){
 
-    thisplayer.life = updated.life;
-    thisplayer.rotation = updated.rotation;
-    thisplayer.location.x = updated.location.x;
-    thisplayer.location.y = updated.location.y;
 
-    if ( collitions.length > 0 ){
-      collitions.forEach(function(player){
-        var p = _.findWhere( players, { id: player.id });
-        p.life = p.life - 1 < 0 ? 0 : p.life - 1;
-      });
+        console.log("THISPLAYER",thisplayer.name, thisplayer.location );
+
+        thisplayer.life = updated.life;
+        thisplayer.rotation = updated.rotation;
+        thisplayer.location.x = updated.location.x;
+        thisplayer.location.y = updated.location.y;
+
+        if ( collitions && collitions.length > 0 ){
+          collitions.forEach(function(player){
+            var p = _.findWhere( players, { id: player.id });
+            p.life = p.life - 1 < 0 ? 0 : p.life - 1;
+          });
+        }
+
+        io.sockets.emit( 'playersUpdate', players );
+
     }
-
-    io.sockets.emit( 'playersUpdate', players );
   })
 
   // Passing in title from server

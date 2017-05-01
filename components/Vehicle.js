@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import KeyHandler, {KEYDOWN, KEYUP} from 'react-key-handler';
 import _ from 'underscore';
+import $ from 'jquery';
 
 class Vehicle extends React.Component {
 
@@ -22,6 +23,7 @@ class Vehicle extends React.Component {
   componentWIllMount(){
 
     // 
+
 
   }
 
@@ -75,8 +77,8 @@ class Vehicle extends React.Component {
     // console.log("EVENT", e);
 
     const context = this;
-    const rotateSpeed = 30;
-    const moveSpeed = 25;
+    const rotateSpeed = 15;
+    const moveSpeed = 5;
 
     let updatePackage = { id: this.props.player.id,
                           life: this.props.player.life, 
@@ -205,28 +207,45 @@ class Vehicle extends React.Component {
       }
       
       const moveForward = function(moveSpeed, angle){
+
+        angle = angle || Math.abs( updatePackage.rotation - (timesRotated*360));
+
         // [ x, y ] ( left, top )
           const forwardMove = {
             // up
               "0": [ 0, 20 ],
             // top rights
+
+             "15": [ 5, 15 ],
+
              "30": [ 5, 15 ],
+             "45": [ 5, 15 ],
              "60": [ 10, 10 ],
+             "75": [ 10, 10 ],
             // right
              "90": [ 20, 0 ],
             // down rights
+            "105": [ 10, -10],
             "120": [ 10, -10],
+            "135": [ 10, -10],
             "150": [ 5, -15],
+            "165": [ 5, -15],
             // down
             "180": [ 0, -20],
             // down left
+            "195": [ -5, -15 ],
             "210": [ -5, -15 ],
+            "225": [ -5, -15 ],
             "240": [ -10, -10 ],
+            "255": [ -10, -10 ],
             // left
             "270": [ -20, 0 ],
             // up left
+            "285": [ -10, 10 ],
             "300": [ -10, 10 ],
+            "315": [ -10, 10 ],
             "330": [ -5, 15],
+            "345": [ -5, 15],
             // up
             "360": [ 0, 20],
           }
@@ -234,7 +253,7 @@ class Vehicle extends React.Component {
 
 
         if ( !moving && context.state.up ){
-          console.log("MOVING");
+          console.log("MOVING ", angle);
           // moving = true;
 
           // calculate left and top to add
@@ -262,6 +281,9 @@ class Vehicle extends React.Component {
             updatePackage.life = (updatePackage.life - 1 < 0) ? 0 : updatePackage.life - 1;
 
             if ( updatePackage.life === 0 ){
+
+              // increase death
+              updatePackage.death = context.props.player.deaths + 1;
 
             }
 
@@ -293,7 +315,15 @@ class Vehicle extends React.Component {
       }
 
       // set move in motion
-      if (!moving){ moveForward(moveSpeed, angle); }
+
+      if (!moving){ 
+
+        moveForward(moveSpeed, angle);
+        setTimeout( function(){
+          context.move();
+        }, 100);
+
+      }
 
     } else {
       // SEND UPDATE PACKAGE TO PARENT
@@ -313,6 +343,17 @@ class Vehicle extends React.Component {
 
 
   render() {
+    var context = this;
+    if ( context.props.player.life === 0 ){
+        
+        $(`${context.props.player.id}`).fadeOut();
+        setTimeout(function(){
+          context.props.update({ life: 3 });
+          $(`${context.props.player.id}`).fadeIn();
+        }, 2000)
+
+    }
+
     return (
 
     <div>
@@ -356,7 +397,7 @@ class Vehicle extends React.Component {
                   onKeyHandle={ (e) => this.move("spacebar",e) } />
 
 
-      <div className={`vehicle type${ this.props.player.type }${this.props.player.life}`} style={{ 
+      <div id={this.props.player.id} className={`vehicle type${ this.props.player.type }${this.props.player.life}`} style={{ 
                     left: this.props.player.location.x,
                     top: this.props.player.location.y,
                     transform: `rotate(${this.props.player.rotation}deg)`
