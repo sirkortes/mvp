@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const _ = require('underscore');
 const port = (process.env.PORT || 3000)
+
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
 
@@ -18,7 +19,7 @@ const players = [];
 // this doesnt work, it'll be the same for everyone
 // };
 
-const title = "WELCOME TO THE JUNGLE";
+const title = "WELCOME TO BOOMPER CARS";
 
 
 
