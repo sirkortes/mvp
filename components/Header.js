@@ -5,7 +5,7 @@ class Header extends React.Component {
   
   constructor(props){
     super(props);
-    console.log("[P] Header:", this.props)
+    // console.log("[P] Header:", this.props)
   }
 
 

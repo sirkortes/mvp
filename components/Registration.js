@@ -7,7 +7,7 @@ class Registration extends React.Component {
   constructor(props){
     super(props);
 
-    console.log("Registration Props",props)
+    // console.log("[P] Registration",props)
 
     this.state = { type: 'A' };
     this.typeChange = this.typeChange.bind(this);

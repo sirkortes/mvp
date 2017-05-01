@@ -9,34 +9,34 @@ class Players extends React.Component {
   constructor(props) {
     super(props);
     this.emit = this.emit.bind(this);
+    this.update = this.update.bind(this);
 
-    console.log("[P] Players:", props)
+    console.log("[PROPS] Players:", this.props );
   }
 
   emit(event, payLoad){
-    console.log("Players intercepted", event, payLoad );
-    // intercepts event before it reaches parent App Component
 
-    // if ( event === 'join' ){
-    //   this.setState({ player: payLoad });
-    // }
-
-    // does it's thing, then passes event to parent
     this.props.emit(event, payLoad);
+  }
+
+  update( updatePackage ) {
+    // receive movement from game,
+    // pass them to app
+    this.props.update( updatePackage );
   }
 
   render() {
 
     var show;
-    console.log("[R] PLAYERS")
+    // console.log("[R] PLAYERS")
 
-    if ( this.props.state.status === "connected" ){
+    if ( this.props.status === "connected" ){
 
-      console.log("[R] PLAYERS CONNECTED")
-      if ( !this.props.state.player.name ){
+      // console.log("[R] PLAYERS CONNECTED")
+      if ( !this.props.player.name ){
 
         // not as a player
-        console.log("[R] PLAYERS REGISTRATION")
+        // console.log("[R] PLAYERS REGISTRATION")
         return (
                 <div>
                     <Registration emit={ this.emit } />
@@ -46,10 +46,14 @@ class Players extends React.Component {
       } else {
 
         // is a player
-        console.log("[R] PLAYERS GAME")
+        // console.log("[R] PLAYERS GAME")
         return (
                 <div>
-                    <Game player={ this.props.state.player } />
+                    <Game 
+                          player={ this.props.player } 
+                          players={ this.props.players }
+                          update={ this.update }
+                    />
                 </div>
               );
 

@@ -6,26 +6,41 @@ class Game extends React.Component {
 
   constructor(props){
     super(props);
-    console.log("GAME PROPS",props)
+    this.update = this.update.bind(this);
+    console.log("[PROPS] Game: ", this.props );
+  }
+
+  update( updatePackage ){
+    // receive movements from Vehicle,
+    // pass them to Players Component
+    this.props.update( updatePackage );
   }
 
   render() {
+    let context = this;
     return (
       <div id="gameContainer">
 
-          <Header player={ this.props.player } />
-
-        {/* <sidebar id="stats">
-          
-              for each user playing, 
-              show user and stats
-              sorted by trophies
-          
-        </sidebar>*/}
+        <Header player={ this.props.player } />
 
         <section id="gameboard">
-          <Vehicle player={ this.props.player } />
+
+          { context.props.players.map( (p) => 
+            <Vehicle key={ p.id } 
+                     player={ p } 
+                     players={ context.props.players }
+                     update={ context.update } /> )}
+
         </section>
+
+
+          <p id="devstat2"> 
+            PLAYER ID: { this.props.player.id }
+            <br/>
+            PLAYERS: { JSON.stringify( this.props.players ) } 
+          </p>
+
+
 
       </div>
       );
@@ -35,3 +50,11 @@ class Game extends React.Component {
 export default Game;
 
 // render every player connected
+
+
+/*
+  
+  <Vehicle player={ this.props.player } 
+                   update={ this.update } />
+
+*/

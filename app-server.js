@@ -14,68 +14,96 @@ const io = require('socket.io').listen(server);
 const connections = [];
 const players = [];
 
+// let thisplayer = {
+// this doesnt work, it'll be the same for everyone
+// };
+
 const title = "WELCOME TO THE JUNGLE";
 
 
 
 io.sockets.on('connection', function(socket) {
 
+  console.log("CONNECTED")
+  socket.emit('connect');
 
-    // on player disconnecting
-    socket.once('disconnect', function() {
+  connections.push(socket);
+  console.log("CONNECTED: %s sockets connected", 
+                connections.length );
 
-      var player = _.findWhere( players, { id: this.id });
+  // on player disconnecting
+  socket.once('disconnect', function() {
 
-      if ( player ){
-        players.splice( players.indexOf(player), 1);
+    var player = _.findWhere( players, { id: this.id });
 
-        // EMIT EVENT TO ALL SOCKETS
-        io.sockets.emit( 'players', player );
-        console.log("Left: %s ( %s Connected )", player.name, players.length);
-      }
+    if ( player ){
+      players.splice( players.indexOf(player), 1);
 
-      connections.splice(connections.indexOf(socket), 1);
-      socket.disconnect();
-      console.log("Disconnected: %s sockets remaining", connections.length);
-    });
+      // EMIT EVENT TO ALL SOCKETS
+      io.sockets.emit( 'playersUpdate', players );
+      console.log("Left: %s ( %s Connected )", player.name, players.length);
+    }
+
+    connections.splice(connections.indexOf(socket), 1);
+    socket.disconnect();
+    console.log("Disconnected: %s sockets remaining", connections.length);
+  });
+
+  // on join ( registered )
+  socket.on('join', function(player){
+
+    console.log("%s JOINED", player.name);
+
+    player.id = this.id;
+    player.kills = 0;
+    player.deaths = 0;
+    player.score = 0;
+    player.life = 3;
+    player.location = { 
+      x: Math.floor(Math.random()*(870-2+1)+ 2) , 
+      y: Math.floor(Math.random()*(540-2+1)+ 2)  
+    };
+    player.rotation = 0;
+
+    // add to players ( to front )
+    players.push( player );
+
+    // send back to game
+    this.emit( 'joined', 
+              { player: player, players: players });
+
+  })
 
 
-    socket.on('join', function(player){
+  // on moving / updating
+  socket.on('update', function([updated, collitions]){
+    // receive updated player from app
+    // update the player in server 
+    // and broadcast players array
 
-      console.log("%s JOINED",player.name);
+    // need to always find this player to update him
+    let thisplayer = _.findWhere( players, { id: this.id });
 
-      player.id = this.id;
-      player.kills = 0;
-      player.deaths = 0;
-      player.score = 0;
-      player.life = 3;
-      player.location = { x: 10, y: 10 };
-      player.rotation = 0;
+    console.log("THISPLAYER",thisplayer.name, thisplayer.location );
 
-      // add to players
-      players.push( player )
+    thisplayer.life = updated.life;
+    thisplayer.rotation = updated.rotation;
+    thisplayer.location.x = updated.location.x;
+    thisplayer.location.y = updated.location.y;
 
-      // remove current player from players
-      // when sending back as players container
-      // does splice alter the seerver's array??? 
-      // var others = players.splice( players.indexOf(player), 1);
-      // console.log("OTHERS",others)
+    if ( collitions.length > 0 ){
+      collitions.forEach(function(player){
+        var p = _.findWhere( players, { id: player.id });
+        p.life = p.life - 1 < 0 ? 0 : p.life - 1;
+      });
+    }
 
-      // send back to game
-      this.emit( 'joined', { player: player, players: players });
+    io.sockets.emit( 'playersUpdate', players );
+  })
 
-    })
-
-    socket.on('action', function(data){
-      // on action, update player data here in server
-      // and send that data to everybody else
-    })
-
-    // Passing in title from server
-    socket.emit('welcome', { title: title });
-
-    connections.push(socket);
-    console.log("CONNECTED: %s sockets connected", connections.length);
+  // Passing in title from server
+  // socket.emit('welcome', { title: title });
+   
 
 });
 
