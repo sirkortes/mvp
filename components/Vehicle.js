@@ -41,8 +41,8 @@ class Vehicle extends React.Component {
     let carheight;
     if ( this.props.player.type === 'A' ){
 
-      carwidth = 38 - 2;
-      carheight = 58 - 2;
+      carwidth = 38;
+      carheight = 58;
 
     }
 
@@ -50,14 +50,11 @@ class Vehicle extends React.Component {
       
       if ( player.id !== id ){
         
-        if ( player.location.x >= x && player.location.x <= x+carwidth  ){
-          // x collition!
-          return player;
-        } 
-        if ( player.location.y >= y && player.location.y <= y + carheight ){
+        if ((  (player.location.x >= x) && (player.location.x <= (x+carwidth))  ) && ( (player.location.y >= y) && (player.location.y <= (y + carheight)) )) {
           // y collition
           return player;
         }
+
       }
 
     })
@@ -81,7 +78,8 @@ class Vehicle extends React.Component {
     const rotateSpeed = 30;
     const moveSpeed = 25;
 
-    let updatePackage = { life: 3, 
+    let updatePackage = { id: this.props.player.id,
+                          life: this.props.player.life, 
                           rotation: this.props.player.rotation,
                           x: this.props.player.location.x,
                           y: this.props.player.location.y,
@@ -247,8 +245,8 @@ class Vehicle extends React.Component {
           let top = context.props.player.location.y + addtop;
           
           // constrain to gameboard
-          left = left <= 0 ? 0 : left >= 870 ? 870 : left;
-          top = top <= 0 ? 0 : top >= 540 ? 540 : top;
+          left = (left <= 0) ? 0 : (left >= 870) ? 870 : left;
+           top =  (top <= 0) ? 0 : (top >= 540) ? 540 : top;
 
           updatePackage.x = left;
           updatePackage.y = top;
