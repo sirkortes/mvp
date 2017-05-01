@@ -32,7 +32,7 @@ class APP extends React.Component {
 
   componentWillMount(){
     
-    this.socket = io('http://localhost:3000');
+    this.socket = io( process.env.PORT || 'http://localhost:3000' );
     this.socket.on('connect', this.connect);
     this.socket.on('disconnect', this.disconnect);
     this.socket.on('welcome', this.welcome);

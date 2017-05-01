@@ -1,7 +1,15 @@
 const express = require('express');
 const app = express();
 const _ = require('underscore');
+
 const port = (process.env.PORT || 3000)
+
+// io for heroku
+const io = require('socket.io')({
+  "transports": ["xhr-polling"], 
+  "polling duration": 10
+});
+
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
@@ -11,11 +19,6 @@ const server = app.listen(port);
 // io for localhost
 // const io = require('socket.io').listen(server);
 
-// io for heroku
-const io = require('socket.io')({
-  "transports": ["xhr-polling"], 
-  "polling duration": 10
-});
 
 
 
@@ -122,4 +125,4 @@ io.sockets.on('connection', function(socket) {
 
 });
 
-console.log("Server running at 3000!");
+console.log("Server running at ",port);
