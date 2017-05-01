@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+Boomper Cars 
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+Online Multiplayer Game all ages for fun, entertainment or stress relief
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+Online Multiplayer Game for crazy drivers of all ages who dare to battle it out with their friends in a Bumber Car like game
 
 ## Problem ##
-  > Describe the problem your product solves.
+Now you know what your favorite online game is, Boomper Cars 
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+It's so much fun to compete with your buddies in an easy to play game where it's fair game for everyone
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+"SO MUCH FUN!!!"
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+Just provide an alias and enter the bumperfield!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+"OH MY, I CAN'T STOP PLAYING THIS, IT'S SO FUN!"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+Dear reader, now you need play some Boomper Cars!
