@@ -7,7 +7,16 @@ app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
 
 const server = app.listen(port);
-const io = require('socket.io').listen(server);
+const io = require('socket.io')//.listen(server);
+
+
+// Heroku won't actually allow us to use WebSockets
+// so we have to setup polling instead.
+// https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
+io.configure(function () {  
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 
 // Game Variables
