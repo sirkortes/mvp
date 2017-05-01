@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 const _ = require('underscore');
-
+const port = (process.env.PORT || 3000)
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
 
-const server = app.listen(3000);
+const server = app.listen(port);
 const io = require('socket.io').listen(server);
 
 
